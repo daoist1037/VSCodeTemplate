@@ -1,0 +1,86 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "cmake",
+            "command": "build",
+            "problemMatcher": "$gcc",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Flash",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-s",
+                "D:/Portable/OpenOCD/share/openocd/scripts",
+                "-f",
+                "E:/Code/MCU/cmakeopenocd/stm32f429discovery.cfg",
+                "-c",
+                "'tcl_port disabled'",
+                "-c",
+                "'gdb_port disabled'",
+                "-c",
+                "'tcl_port disabled'",
+                "-c",
+                "'program E:/Code/MCU/cmakeopenocd/build/cmakeopenocd.elf verify'",
+                "-c",
+                "reset",
+                "-c",
+                "shutdown"
+            ],
+            "dependsOn":[
+                "Build"
+            ]
+        },
+        {
+            "label": "openocd stlink",
+            "type": "shell",
+            "command": "openocd",
+            // "args": [
+            //     "-c",
+            //     "'tcl_port disabled'",
+            //     "-c",
+            //     "'gdb_port 3333'",
+            //     "-c", 
+            //     "'telnet_port 4444'",
+            //     "-s",
+            //     "D:/Portable/OpenOCD/share/openocd/scripts",
+            //     "-f",
+            //     "E:/Code/MCU/cmakeopenocd/stm32f429discovery.cfg",
+            //     "-c", 
+            //     "'init;reset init;'",
+            //     "-c",
+            //     "'echo (((READY)))'"
+            // ]
+            "args": [
+                "-c",
+                "tcl_port disabled",
+                "-c",
+                "gdb_port 3333",
+                "-c",
+                "telnet_port 4444",
+                "-s",
+                "D:/Portable/OpenOCD/share/openocd/scripts",
+                "-f",
+                "E:/Code/MCU/cmakeopenocd/stm32f429discovery.cfg",
+                "-c",
+                "init;reset init;",
+                "-c",
+                "echo (((READY)))"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+        }
+    ]
+}
+// openocd -c 'tcl_port disabled' -c 'gdb_port 3333' -c 'telnet_port 4444' -s D:/Portable/OpenOCD/share/openocd/scripts -f E:/Code/MCU/cmakeopenocd/stm32f429discovery.cfg -c 'init; reset init;' -c 'echo ((READY))'
